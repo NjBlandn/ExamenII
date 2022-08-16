@@ -16,12 +16,12 @@ vent = tk.Tk()
 vent.geometry('1400x700')
 
 vent.title('Calculo de Zonas Inundadas')    #Titulo
-vent.config(bg= 'gray')
+vent.config(bg= 'ivory2')
 
 # Widget 1 #
 
 # Agregar etiqueta 1
-etiq1 = tk.Label(vent, text='1. Seleciona la imagen a utilizar.', bg='silver',  fg='black', font = 'Calibri 10')
+etiq1 = tk.Label(vent, text='1. Seleciona la imagen a utilizar.', bg='gray85',  fg='black', font = 'Calibri 11')
 etiq1.grid(row = 0, column = 1, pady = (3))
 
 # caja de texo 1
@@ -40,7 +40,7 @@ boton1.grid(row = 1, column = 1, padx = (10,10))
 # Widget 2 #
 
 #Agregar etiqueta 2
-etiq2 = tk.Label(vent, text='2. Seleciona el Shapefile de la zona de estudio.', font = 'Calibri 10', bg='silver', fg='black')
+etiq2 = tk.Label(vent, text='2. Seleciona el Shapefile de la zona de estudio.', font = 'Calibri 10', bg='gray85', fg='black')
 etiq2.grid(row = 3, column = 1)
 
 #caja de texo 1
