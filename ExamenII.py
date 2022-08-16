@@ -77,3 +77,66 @@ parameters = HashMap()
 parameters.put('copyMetadata', True)
 parameters.put('geoRegion', geometry)
 product_subset = snappy.GPF.createProduct('Subset', parameters, apply_orbit_file)
+
+#Mostrar las dimensiones de la imagen
+width = product_subset.getSceneRasterWidth()
+print("Width: {} px".format(width))
+height = product_subset.getSceneRasterHeight()
+print("Height: {} px".format(height))
+band_names = product_subset.getBandNames()
+print("Band names: {}".format(", ".join(band_names)))
+band = product_subset.getBand(band_names[0])
+print(band.getRasterSize())
+plotBand(product_subset, "Intensity_VV", 0, 100000)
+
+##Aplicar la calibracion de la imagen
+parameters = HashMap()
+parameters.put('outputSigmaBand', True)
+parameters.put('sourceBands', 'Intensity_VV')
+parameters.put('selectedPolarisations', "VV")
+parameters.put('outputImageScaleInDb', False)
+product_calibrated = GPF.createProduct("Calibration", parameters, product_subset)
+plotBand(product_calibrated, "Sigma0_VV", 0, 1)
+
+##Aplicar el filtro Speckle
+filterSizeY = '5'
+filterSizeX = '5'
+parameters = HashMap()
+parameters.put('sourceBands', 'Sigma0_VV')
+parameters.put('filter', 'Lee')
+parameters.put('filterSizeX', filterSizeX)
+parameters.put('filterSizeY', filterSizeY)
+parameters.put('dampingFactor', '2')
+parameters.put('estimateENL', 'true')
+parameters.put('enl', '1.0')
+parameters.put('numLooksStr', '1')
+parameters.put('targetWindowSizeStr', '3x3')
+parameters.put('sigmaStr', '0.9')
+parameters.put('anSize', '50')
+speckle_filter = snappy.GPF.createProduct('Speckle-Filter', parameters, product_calibrated)
+plotBand(speckle_filter, 'Sigma0_VV', 0, 1)
+
+##Aplicar la correccion del terremo
+parameters = HashMap()
+parameters.put('demName', 'SRTM 3Sec')
+parameters.put('pixelSpacingInMeter', 10.0)
+parameters.put('sourceBands', 'Sigma0_VV')
+speckle_filter_tc = GPF.createProduct("Terrain-Correction", parameters, speckle_filter)
+plotBand(speckle_filter_tc, 'Sigma0_VV', 0, 0.1)
+
+#Crear una mascara binaria para la inundacion
+parameters = HashMap()
+BandDescriptor = snappy.jpy.get_type('org.esa.snap.core.gpf.common.BandMathsOp$BandDescriptor')
+targetBand = BandDescriptor()
+targetBand.name = 'Sigma0_VV_Flooded'
+targetBand.type = 'uint8'
+targetBand.expression = '(Sigma0_VV < 1.57E-2) ? 1 : 0'
+targetBands = snappy.jpy.array('org.esa.snap.core.gpf.common.BandMathsOp$BandDescriptor', 1)
+targetBands[0] = targetBand
+parameters.put('targetBands', targetBands)
+flood_mask = GPF.createProduct('BandMaths', parameters, speckle_filter_tc)
+plotBand(flood_mask, 'Sigma0_VV_Flooded', 0, 1)
+
+#Crear la imagen a partir de la mascara
+ProductIO.writeProduct(flood_mask,"C:/Users/Dell/Desktop/Desarrollo/actividad7\data\final_mask", 'GeoTIFF')
+os.path.exists("C:/Users/Dell/Desktop/Desarrollo/actividad7\data\final_mask.tif")
