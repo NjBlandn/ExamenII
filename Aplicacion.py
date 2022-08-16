@@ -40,7 +40,7 @@ boton1.grid(row = 1, column = 1, padx = (10,10))
 # Widget 2 #
 
 #Agregar etiqueta 2
-etiq2 = tk.Label(vent, text='2. Seleciona el Shapefile de la zona de estudio.', font = 'Calibri 10', bg='gray85', fg='black')
+etiq2 = tk.Label(vent, text='2. Seleciona el Shapefile de la zona de estudio.', font = 'Calibri 11', bg='gray85', fg='black')
 etiq2.grid(row = 3, column = 1)
 
 #caja de texo 1
@@ -56,7 +56,7 @@ def abrir_shape():
     textResult2.insert(tk.END, shape_abierto)
     
 #Agregar boton 2
-boton2 = tk.Button(text="Seleccione el shapefile ", font = 'Helvetica 10', bg="white", command = abrir_shape)
+boton2 = tk.Button(text="Seleccione el shapefile ", font = 'Calibri 10', bg="white", command = abrir_shape)
 boton2.grid(row = 4, column = 1)
 # Widget 3 #
 
