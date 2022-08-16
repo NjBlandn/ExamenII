@@ -54,7 +54,10 @@ def abrir_shape():
                 ("all files","*.*")))
     print (shape_abierto)
     textResult2.insert(tk.END, shape_abierto)
-
+    
+#Agregar boton 2
+boton2 = tk.Button(text="Seleccione el shapefile ", font = 'Helvetica 10', bg="white", command = abrir_shape)
+boton2.grid(row = 4, column = 1)
 # Widget 3 #
 
 #Agregar etiqueta 3
