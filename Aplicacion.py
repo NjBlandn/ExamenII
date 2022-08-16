@@ -54,3 +54,42 @@ def abrir_shape():
                 ("all files","*.*")))
     print (shape_abierto)
     textResult2.insert(tk.END, shape_abierto)
+
+# Widget 3 #
+
+#Agregar etiqueta 3
+etiq3 = tk.Label(vent, text='3. Proceda a pre-procesar la imagen.', font = 'Calibri 11', bg='gray85',  fg='black')
+etiq3.grid(row = 6, column = 1)
+
+
+#Agregar boton 3
+boton3 = tk.Button(text="Preprocesar la imagen", font = 'Calibri 10', bg="white")
+boton3.grid(row = 7, column = 1)
+
+# Widget 4 #
+
+#Agregar etiqueta 4
+etiq4 = tk.Label(vent, text='4. Defina el umbral de la mascara de agua.', font = 'Calibri 11', bg='gray85',  fg='black')
+etiq4.grid(row = 9, column = 1)
+
+#Agregar caja de texto
+umbral = tk.Entry(vent, font= 'Calibri 10', justify = 'center', highlightthickness = 3)
+umbral.grid(row = 10, column = 1, pady = (3))
+#Agregar boton 4
+boton4 = tk.Button(text="Aplicar la mascara", font = 'Calibri 10', bg="white")
+boton4.grid(row = 11, column = 1, pady =(3))
+
+# Widget 5 #
+
+#Agregar etiqueta 5
+etiq5 = tk.Label(vent, text='5. Crea la imagen GeoTIFF a partir del umbral seleccionado.', font = 'Calibri 11', bg='gray88', fg='black')
+etiq5.grid(row = 12, column = 1)
+
+mapa = tk.Canvas(vent, width = 500, height = 600, bg = 'white', highlightthickness = 10)
+mapa.grid(row = 0, column = 2, rowspan = 14, pady =(30))
+
+#Agregar boton 5
+boton5 = tk.Button(text="Crear el archivo", font = 'Calibri 10', bg="white")
+boton5.grid(row = 13, column = 1)
+
+vent.mainloop()
