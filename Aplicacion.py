@@ -36,3 +36,21 @@ def abrir_imagen():
 #Agregar boton 1
 boton1 = tk.Button(text="Seleccionar imagen", font = 'Calibri 10',  bg="white",command=abrir_imagen)
 boton1.grid(row = 1, column = 1, padx = (10,10))
+
+# Widget 2 #
+
+#Agregar etiqueta 2
+etiq2 = tk.Label(vent, text='2. Seleciona el Shapefile de la zona de estudio.', font = 'Calibri 10', bg='silver', fg='black')
+etiq2.grid(row = 3, column = 1)
+
+#caja de texo 1
+textResult2 = tk.Text(vent, height = 1, font = 'Calibri 10', bg = 'white', fg = 'black', highlightthickness = 3)                                     
+textResult2.grid(row = 5, column = 1, padx = (100,100))
+
+#funcion para abrir imagen
+def abrir_shape():
+    shape_abierto=filedialog.askopenfilename(initialdir = "/",
+                title = "Seleccione shapefile",filetypes = (("shapefile files","*.shp"),
+                ("all files","*.*")))
+    print (shape_abierto)
+    textResult2.insert(tk.END, shape_abierto)
